@@ -23,7 +23,7 @@ void List<T>::insertionSort(ListNodePosition(T) p, int n)
 {
   for (int i = 0; i < n; i++)
   {
-    insertA(search(p->data, r, p), p->data);
+    insertA(search(p->data, i, p), p->data);
     p = p->succ;
     remove(p->pred);
   }

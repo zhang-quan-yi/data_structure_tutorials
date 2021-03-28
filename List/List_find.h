@@ -13,3 +13,8 @@ ListNodePosition(T) List<T>::find(T const &e, int n, ListNodePosition(T) p) cons
   }
   return NULL;
 }
+
+/**
+ * 最好情况下：O(1)
+ * 最坏情况下：O(n)
+ */
