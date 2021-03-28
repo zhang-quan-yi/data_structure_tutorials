@@ -410,3 +410,26 @@ void Vector<T>::merge(Rank lo, Rank mi, Rank hi)
   }
   delete[] One;
 }
+
+template <typename T>
+void Vector<T>::insertionSort(Rank lo, Rank hi)
+{
+  // 不变性：[lo, i) 均为以排序列表
+  T *Sorted = new T[hi - lo];
+  Sorted[0] = _elem[lo];
+  Rank curr = 1;
+  while (curr++ < hi)
+  {
+    Rank target = search(Sorted[curr], 0, curr);
+    if (target == -1)
+    {
+      insert(0, _elem[lo + curr]);
+    }
+    else
+    {
+      insert(target + 1, _elem[lo + curr]);
+    }
+  }
+  copyFrom(Sorted, 0, hi - lo);
+  delete[] Sorted;
+}
