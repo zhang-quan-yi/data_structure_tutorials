@@ -54,6 +54,14 @@ void Vector<T>::shrink()
   delete[] oldElem;
 }
 
+template <typename T> //元素类型
+void Vector<T>::copyFrom(T const *A, Rank lo, Rank hi)
+{                                           //以数组区间A[lo, hi)为蓝本复制向量
+  _elem = new T[_capacity = 2 * (hi - lo)]; //分配空间
+  for (_size = 0; lo < hi; _size++, lo++)   //A[lo, hi)内的元素逐一
+    _elem[_size] = A[lo];                   //复制至_elem[0, hi - lo)
+}
+
 /** 
  * 重载 [] 操作符，通过秩直接引用元素
 */
@@ -415,21 +423,24 @@ template <typename T>
 void Vector<T>::insertionSort(Rank lo, Rank hi)
 {
   // 不变性：[lo, i) 均为以排序列表
-  T *Sorted = new T[hi - lo];
-  Sorted[0] = _elem[lo];
-  Rank curr = 1;
-  while (curr++ < hi)
+  T *oldElem = _elem;
+  copyFrom(oldElem, 0, lo);
+  Rank curr = 0;
+  while (lo + curr < hi)
   {
-    Rank target = search(Sorted[curr], 0, curr);
+    Rank target = search(oldElem[lo + curr], 0, curr);
     if (target == -1)
     {
-      insert(0, _elem[lo + curr]);
+      insert(0, oldElem[lo + curr]);
     }
     else
     {
-      insert(target + 1, _elem[lo + curr]);
+      insert(target + 1, oldElem[lo + curr]);
     }
   }
-  copyFrom(Sorted, 0, hi - lo);
-  delete[] Sorted;
+  for (Rank i = hi; i < _size; i++)
+  {
+    insert(i, oldElem[i]);
+  }
+  delete[] oldElem;
 }
