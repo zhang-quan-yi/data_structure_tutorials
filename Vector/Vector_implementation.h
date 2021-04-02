@@ -437,6 +437,7 @@ void Vector<T>::insertionSort(Rank lo, Rank hi)
     {
       insert(target + 1, oldElem[lo + curr]);
     }
+    curr++;
   }
   for (Rank i = hi; i < _size; i++)
   {
