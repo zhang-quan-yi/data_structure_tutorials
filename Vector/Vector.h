@@ -99,3 +99,5 @@ public:
   template <typename VST>
   void traverse(VST &);
 };
+
+#include "Vector_implementation.h"
