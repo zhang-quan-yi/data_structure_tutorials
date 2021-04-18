@@ -1,5 +1,5 @@
 #pragma once
-
+#include <stddef.h>
 #include "../Entry/Entry.h"
 #define QListNodePosi(T) QuadlistNode<T> *
 

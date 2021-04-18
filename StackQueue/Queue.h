@@ -1,3 +1,4 @@
+#pragma once
 #include "../List/List.h"
 template <typename T>
 class Queue : public List<T>
@@ -9,10 +10,10 @@ public:
   }
   T dequeue()
   {
-    return remove(first());
+    return remove(this->first());
   }
   T &front()
   {
-    return first()->data;
+    return this->first()->data;
   }
 };

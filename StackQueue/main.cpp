@@ -4,6 +4,7 @@
 #include "priority.h"
 #include "queen.h"
 #include "labyrinth.h"
+#include "Queue.h"
 
 using namespace std;
 
@@ -149,5 +150,6 @@ int main(int argc, char *argv[])
 {
   // testEvaluate();
   // testQueue();
-  testLaby();
+  // testLaby();
+  Queue<int>* q = new Queue<int>();
 }

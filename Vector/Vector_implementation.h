@@ -86,34 +86,6 @@ void Vector<T>::unsort(Rank lo, Rank hi)
 }
 
 /**
- * 判等器与比较器
- * 
-*/
-template <typename T>
-static bool lt(T *a, T *b)
-{
-  return lt(*a, *b);
-}
-
-template <typename T>
-static bool lt(T &a, T &b)
-{
-  return a < b;
-}
-
-template <typename T>
-static bool eq(T *a, T *b)
-{
-  return eq(*a, *b);
-}
-
-template <typename T>
-static bool eq(T &a, T &b)
-{
-  return a == b;
-}
-
-/**
  * 无序查找
  * 复杂度：O(n)
  * 
@@ -340,26 +312,24 @@ static Rank fibSearch(T *A, T const &e, Rank lo, Rank hi)
 template <typename T>
 void Vector<T>::sort(Rank lo, Rank hi)
 {
-  insertionSort(lo, hi);
-  // int s = 2; // rand() % 5
-  // switch (s)
-  // {
-  // case 1:
-  //   bubbleSort(lo, hi);
-  //   break;
-  // case 2:
-  //   selectionSort(lo, hi);
-  //   break;
-  // case 3:
-  //   mergeSort(lo, hi);
-  //   break;
-  // case 4:
-  //   heapSort(lo, hi);
-  //   break;
-  // default:
-  //   quickSort(lo, hi);
-  //   break;
-  // }
+  switch (rand() % 5)
+  {
+  case 1:
+    bubbleSort(lo, hi);
+    break;
+  case 2:
+    selectionSort(lo, hi);
+    break;
+  case 3:
+    mergeSort(lo, hi);
+    break;
+  case 4:
+    heapSort(lo, hi);
+    break;
+  default:
+    quickSort(lo, hi);
+    break;
+  }
 }
 
 template <typename T>
@@ -450,7 +420,7 @@ void Vector<T>::insertionSort(Rank lo, Rank hi)
 }
 
 template <typename T>
-Rank Vector<T>::max(Rank lo, Rank hi)
+Rank Vector<T>::maxInRange(Rank lo, Rank hi)
 {
   Rank maxRank = lo;
   for (Rank i = lo + 1; i < hi; i++)
@@ -470,7 +440,7 @@ void Vector<T>::selectionSort(Rank lo, Rank hi)
   Rank i = hi;
   while (i > lo)
   {
-    Rank maxRank = max(lo, i);
+    Rank maxRank = maxInRange(lo, i);
     std::swap(_elem[maxRank], _elem[i - 1]);
     i--;
   }

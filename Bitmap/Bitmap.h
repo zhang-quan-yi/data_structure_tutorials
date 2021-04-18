@@ -17,7 +17,7 @@ protected:
   }
 
 public:
-  Bitmap(int n = 8)
+  Bitmap(int n = 800)
   {
     init(n);
   }
@@ -73,10 +73,10 @@ public:
     {
       return;
     }
-    int oldN = N;
-    char *oldM = M;
-    init(2 * k);
-    memcpy(M, oldM, oldN);
-    delete[] oldM;
+    // int oldN = N;
+    // char *oldM = M;
+    // init(2 * k);
+    // memcpy(M, oldM, oldN);
+    // delete[] oldM;
   }
 };

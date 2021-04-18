@@ -14,8 +14,8 @@
 
 // 与 BinNode 具有特定关系的节点及指针
 #define sibling(p) (IsLChild(*(p)) ? (p)->parent->rc : (p)->parent->lc)
-#define uncle(x) (IsLChild(*((x)->parent)) ? (x)->parent->parent->rc : (x)->parent->parent->lc)
-#define FromParentTo(x) (IsRoot(x) ? _root : (IsLChild(x) ? ((x)->parent->lc) : ((x)->parent->rc)))
+#define uncle(x) (sibling((x)->parent))
+#define FromParentTo(x) (IsRoot(x) ? _root : (IsLChild(x) ? ((x).parent->lc) : ((x).parent->rc)))
 
 //统计当前节点后代总数，即以其为根的子树规模
 template <typename T>

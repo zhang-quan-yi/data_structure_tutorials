@@ -46,13 +46,14 @@ BinNodePosi(T) BinTree<T>::insertAsRC(BinNodePosi(T) x, T const &e)
 template <typename T>
 BinNodePosi(T) BinTree<T>::attachAsLC(BinNodePosi(T) x, BinTree<T> *&S)
 {
-  if (x->lc = S->_root)
+  x->lc = S->_root;
+  if (x->lc)
   {
     x->lc->parent = x;
   }
   _size += S->_size;
   updateHeightAbove(x);
-  S->root = NULL;
+  S->_root = NULL;
   S->_size = 0;
   release(S);
   S = NULL;
@@ -63,13 +64,14 @@ BinNodePosi(T) BinTree<T>::attachAsLC(BinNodePosi(T) x, BinTree<T> *&S)
 template <typename T>
 BinNodePosi(T) BinTree<T>::attachAsRC(BinNodePosi(T) x, BinTree<T> *&S)
 {
-  if (x->rc = S->_root)
+  x->rc = S->_root;
+  if (x->rc)
   {
     x->rc->parent = x;
   }
   _size += S->_size;
   updateHeightAbove(x);
-  S->root = NULL;
+  S->_root = NULL;
   S->_size = 0;
   release(S);
   S = NULL;
@@ -124,7 +126,7 @@ void travPre_R(BinNodePosi(T) x, VST &visit)
 {
   if (!x)
   {
-    return
+    return;
   }
   visit(x->data);
   travPre_R(x->lc);
@@ -141,7 +143,7 @@ void travPost_R(BinNodePosi(T) x, VST &visit)
   }
   travPost_R(x->lc, visit);
   travPost_R(x->rc, visit);
-  visit(x->data)
+  visit(x->data);
 }
 
 // 中序遍历 -- 递归

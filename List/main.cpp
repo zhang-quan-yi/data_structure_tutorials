@@ -1,6 +1,14 @@
-#include "List.h"
+#include <iostream>
+using namespace std;
 
-int main(int argc, char *agrv)
+#include "List.h"
+#include "../Vector/Vector.h"
+
+int main(int argc, char *agrv[])
 {
-  return 0;
+  Vector<int> * v = new Vector<int>();
+  List<int> *l = new List<int>();
+  l->insertAsFirst(2);
+  l->insertAsFirst(1);
+  printf("first is %d", l->first()->data);
 }

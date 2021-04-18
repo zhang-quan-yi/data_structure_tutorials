@@ -1,21 +1,22 @@
 #pragma once
 #include <cstdlib>
+#include <stddef.h>
 #include "../List/List.h"
 #include "../Entry/Entry.h"
 #include "Quadlist.h"
 #include "../Dictionary/Dictionary.h"
 
 template <typename K, typename V>
-class Skiplist : public Dictionary<K, V>, public List<Quadlist<Entry<K, V>>>
+class Skiplist : public Dictionary<K, V>, public List<Quadlist<Entry<K, V>> *>
 {
 protected:
   bool skipSearch(ListNode<Quadlist<Entry<K, V>> *> *&qlist, QuadlistNode<Entry<K, V>> *&p, K &k);
 
 public:
-  int size() const { return empty() ? 0 : last()->data->size(); }
+  int size() const { return this->isEmpty() ? 0 : this->last()->data->size(); }
   int level()
   {
-    return List::size();
+    return List<Quadlist<Entry<K, V>> *>::size();
   }
   bool put(K, V);
   V *get(K k);
@@ -25,11 +26,11 @@ public:
 template <typename K, typename V>
 V *Skiplist<K, V>::get(K k)
 {
-  if (empty())
+  if (this->isEmpty())
   {
     return NULL;
   }
-  ListNode<Quadlist<Entry<K, V>> *> *qlist = first();
+  ListNode<Quadlist<Entry<K, V>> *> *qlist = this->first();
   QuadlistNode<Entry<K, V>> *p = qlist->data->first();
   return skipSearch(qlist, p, k) ? &(p->entry.value) : NULL;
 }
@@ -61,11 +62,11 @@ template <typename K, typename V>
 bool Skiplist<K, V>::put(K k, V v)
 {
   Entry<K, V> e = Entry<K, V>(k, v);
-  if (empty())
+  if (this->isEmpty())
   {
-    insertAsFirst(new Quadlist<Entry<K, V>>);
+    this->insertAsFirst(new Quadlist<Entry<K, V>>);
   }
-  ListNode<Quadlist<Entry<K, V>> *> *qlist = first();
+  ListNode<Quadlist<Entry<K, V>> *> *qlist = this->first();
   QuadlistNode<Entry<K, V>> *p = qlist->data->first();
   if (skipSearch(qlist, p, k))
   {
@@ -74,7 +75,7 @@ bool Skiplist<K, V>::put(K k, V v)
       p = p->below;
     }
   }
-  qlist = last();
+  qlist = this->last();
   QuadlistNode<Entry<K, V>> *b = qlist->data->insertAfterAbove(e, p);
   while (rand() & 1)
   {
@@ -84,9 +85,9 @@ bool Skiplist<K, V>::put(K k, V v)
     }
     if (!qlist->data->valid(p))
     {
-      if (qlist == first())
+      if (qlist == this->first())
       {
-        insertAsFirst(new Quadlist<Entry<K, V>>);
+        this->insertAsFirst(new Quadlist<Entry<K, V>>);
       }
       p = qlist->pred->data->first()->pred;
     }
@@ -103,11 +104,11 @@ bool Skiplist<K, V>::put(K k, V v)
 template <typename K, typename V>
 bool Skiplist<K, V>::remove(K k)
 {
-  if (empty())
+  if (this->isEmpty())
   {
     return false;
   }
-  ListNode<Quadlist<Entry<K, V>> *> *qlist = first();
+  ListNode<Quadlist<Entry<K, V>> *> *qlist = this->first();
   QuadlistNode<Entry<K, V>> *p = qlist->data->first();
   if (!skipSearch(qlist, p, k))
   {
@@ -120,9 +121,9 @@ bool Skiplist<K, V>::remove(K k)
     p = lower;
     qlist = qlist->succ;
   } while (qlist->succ);
-  while (!empty() && first()->data->empty())
+  while (!this->isEmpty() && this->first()->data->empty())
   {
-    List::remove(first());
+    List<Quadlist<Entry<K, V>> *>::remove(this->first());
   }
   return true;
 }

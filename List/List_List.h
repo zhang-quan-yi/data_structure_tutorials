@@ -25,12 +25,6 @@ List<T>::List(List<T> const &l)
 }
 
 template <typename T>
-List<T>::List(List<T> const &L)
-{
-  copyNodes(L.first(), L.size());
-}
-
-template <typename T>
 List<T>::List(List<T> const &L, Rank r, int n)
 {
   copyNodes(L[r], n);

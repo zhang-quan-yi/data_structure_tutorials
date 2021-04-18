@@ -34,7 +34,7 @@ void List<T>::selectionSort(ListNodePosition(T) p, int n)
 {
   ListNodePosition(T) header = p->pred;
   ListNodePosition(T) tail = p;
-  for (i = 0; i < n; i++)
+  for (int i = 0; i < n; i++)
     tail = tail->succ;
   while (1 < n--)
   {
@@ -72,7 +72,7 @@ void List<T>::mergeSort(ListNodePosition(T) p, int n)
   mergeSort(q, n - mid);
   // [p, m)
   // [m, n]
-  merge(p, m, *this, q, n - m);
+  merge(p, mid, *this, q, n - mid);
 }
 
 template <typename T>
