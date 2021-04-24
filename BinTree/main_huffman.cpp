@@ -6,14 +6,19 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-  char content[] = {'r', 'a', 'y', '\0'};
-  PFCForest *forest = initForest();
-  PFCTree *tree = generateTree(forest);
+  int *freq = statistics(argv[1]);
+  HuffForest *forest = initForest(freq);
+  release(freq);
+  HuffTree *tree = generateTree(forest);
   release(forest);
-  PFCTable *table = generateTable(tree);
-  Bitmap *codeString = new Bitmap();
-  int n = encode(table, codeString, content);
-  decode(tree, codeString, n);
+  HuffTable *table = generateTable(tree);
+  for (int i = 2; i < argc; i++)
+  {
+    Bitmap *codeString = new Bitmap;
+    int n = encode(table, codeString, argv[i]);
+    decode(tree, codeString, n);
+    release(codeString);
+  }
   release(table);
   release(tree);
   return 0;
